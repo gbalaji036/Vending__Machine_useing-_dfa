@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine - DFA Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎰 Vending Machine DFA Simulator</h1>
+            <p class="subtitle">Theory of Computation - BCS503</p>
+            <p class="institute">BMS Institute of Technology and Management</p>
+        </header>
+
+        <div class="main-content">
+            <!-- DFA State Diagram -->
+            <div class="dfa-section">
+                <h2>DFA State Diagram</h2>
+                <div class="state-diagram">
+                    <div class="state" id="state-q0">
+                        <div class="state-circle start-state">q0</div>
+                        <span class="state-label">₹0</span>
+                    </div>
+                    <div class="state" id="state-q1">
+                        <div class="state-circle">q1</div>
+                        <span class="state-label">₹1</span>
+                    </div>
+                    <div class="state" id="state-q2">
+                        <div class="state-circle">q2</div>
+                        <span class="state-label">₹2</span>
+                    </div>
+                    <div class="state" id="state-q3">
+                        <div class="state-circle">q3</div>
+                        <span class="state-label">₹3</span>
+                    </div>
+                    <div class="state" id="state-q4">
+                        <div class="state-circle">q4</div>
+                        <span class="state-label">₹4</span>
+                    </div>
+                    <div class="state" id="state-q5">
+                        <div class="state-circle accept-state">q5</div>
+                        <span class="state-label">₹5+ (Accept)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="info-box">
+                    <h3>Current State: <span id="current-state-display">q0</span></h3>
+                    <h3>Total Amount: <span id="total-amount">₹0</span></h3>
+                    <h3>Status: <span id="status">Insert coins to start</span></h3>
+                </div>
+
+                <div class="coin-buttons">
+                    <button class="coin-btn coin-1" onclick="insertCoin(1)">
+                        <span class="coin-value">₹1</span>
+                        <span class="coin-label">Insert ₹1 Coin</span>
+                    </button>
+                    <button class="coin-btn coin-2" onclick="insertCoin(2)">
+                        <span class="coin-value">₹2</span>
+                        <span class="coin-label">Insert ₹2 Coin</span>
+                    </button>
+                </div>
+
+                <button class="reset-btn" onclick="resetMachine()">🔄 Reset Machine</button>
+
+                <div class="transaction-log">
+                    <h3>Transaction History</h3>
+                    <div id="log-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DFA Information Section -->
+        <div class="info-section">
+            <div class="info-card">
+                <h3>📊 DFA Definition</h3>
+                <ul>
+                    <li><strong>States (Q):</strong> {q0, q1, q2, q3, q4, q5}</li>
+                    <li><strong>Input Alphabet (Σ):</strong> {1, 2}</li>
+                    <li><strong>Initial State (q₀):</strong> q0</li>
+                    <li><strong>Accept State (F):</strong> {q5}</li>
+                    <li><strong>Transition Function (δ):</strong> See table below</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🎯 How It Works</h3>
+                <ol>
+                    <li>Machine starts at state q0 (₹0 inserted)</li>
+                    <li>Insert ₹1 or ₹2 coins using the buttons</li>
+                    <li>DFA transitions through states based on total amount</li>
+                    <li>When ₹5 is reached → state q5 (accepting state)</li>
+                    <li>Product is dispensed automatically</li>
+                    <li>Extra coins keep machine in accepting state</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Transition Table -->
+        <div class="table-section">
+            <h2>State Transition Table (δ)</h2>
+            <table class="transition-table">
+                <thead>
+                    <tr>
+                        <th>Current State</th>
+                        <th>Input: ₹1</th>
+                        <th>Input: ₹2</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>q0</td>
+                        <td>q1</td>
+                        <td>q2</td>
+                        <td>Starting state, no money inserted</td>
+                    </tr>
+                    <tr>
+                        <td>q1</td>
+                        <td>q2</td>
+                        <td>q3</td>
+                        <td>₹1 inserted</td>
+                    </tr>
+                    <tr>
+                        <td>q2</td>
+                        <td>q3</td>
+                        <td>q4</td>
+                        <td>₹2 inserted</td>
+                    </tr>
+                    <tr>
+                        <td>q3</td>
+                        <td>q4</td>
+                        <td>q5</td>
+                        <td>₹3 inserted</td>
+                    </tr>
+                    <tr>
+                        <td>q4</td>
+                        <td>q5</td>
+                        <td>q5</td>
+                        <td>₹4 inserted</td>
+                    </tr>
+                    <tr class="accept-row">
+                        <td>q5</td>
+                        <td>q5</td>
+                        <td>q5</td>
+                        <td><strong>Accept State - Item Dispensed!</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Developed by: Pujitha K, Saanvi Sanjay, Salem Ameen Ba Suliman, Sanaa Kumari</p>
+            <p>5th Semester C Section | Department of Computer Science and Engineering</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
